@@ -14,8 +14,8 @@ class TasksController extends Controller
      */
     public function index()
     {
-        $tasks = Task::orderBy('created_at');
-        return view('tasks')->withUsers($tasks);
+        $tasks = Task::orderBy('created_at')->paginate(0);
+        return view('tasks')->withTasks($tasks);
     }
 
     /**

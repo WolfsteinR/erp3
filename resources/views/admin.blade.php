@@ -86,6 +86,7 @@
             @if (Auth::user()->role == 'client')
                 <p><a href="/admin/create-company/{{Auth::user()->id}}">Добавить новую компанию</a></p>
                 <p><a href="/admin/edit-company/{{Auth::user()->id}}">Редактировать компанию</a></p>
+                <p><a href="/admin/tasks--">Список задач</a></p> <!-- тут должен быть список своих задач -->
                 <p><a href="/admin/create-task/{{Auth::user()->id}}">Создать задачу</a></p>
             @endif
 

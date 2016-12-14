@@ -15,7 +15,7 @@ class UsersController extends Controller
      */
     public function index()
     {
-        $users = User::orderBy('created_at')->paginate(10);
+        $users = json_encode(User::orderBy('created_at')->paginate(0));
         // page Heading
         $title = 'Users';
         // return to our view (home.blade.php)

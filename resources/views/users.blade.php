@@ -19,7 +19,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                @foreach ($users as $user)
+                <!--@foreach ($users as $user)
                     <tr @if ($user->active == 1) class="success" @else class="danger" @endif >
                         <td>
                             <p>{{$user->name}}</p>
@@ -40,7 +40,7 @@
                             <a href="/admin/users/{{$user->id}}">Удалить</a>
                         </td>
                     </tr>
-                @endforeach
+                @endforeach-->
                 </tbody>
             </table>
             @endif

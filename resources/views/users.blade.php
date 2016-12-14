@@ -19,7 +19,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr ng-repeat="user in users.data | filter : search">
+                <tr ng-repeat="user in users.data | filter : search" class="@{{user.active}}">
                     <td>
                         <p>@{{user.name}}{{--$user->name--}}</p>
                     </td>
@@ -33,10 +33,10 @@
                         <p>@{{user.active}}{{--$user->active--}}</p>
                     </td>
                     <td>
-                        <a href="/admin/users/{{--$user->id--}}">Изменить</a>
+                        <a href="/admin/users/@{{user.id}}{{--$user->id--}}">Изменить</a>
                     </td>
                     <td>
-                        <a href="/admin/users/{{--$user->id--}}">Удалить</a>
+                        <a href="/admin/users/@{{user.id}}{{--$user->id--}}">Удалить</a>
                     </td>
                 </tr>
                 </tbody>

@@ -19,24 +19,26 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr ng-repeat="user in users.data | filter : search" class="@{{user.active}}">
+                <tr ng-repeat="user in users.data | filter : search" @verbatim @if {{ $user.active == 1 }} class="success" @else class="danger" @endif @endverbatim>
+                    @verbatim
                     <td>
-                        <p>@{{user.name}}{{--$user->name--}}</p>
+                        <p>{{ user.name }}</p>
+                    </td>
+                    @endverbatim
+                    <td>
+                        <p>@{{user.email}}</p>
                     </td>
                     <td>
-                        <p>@{{user.email}}{{--$user->email--}}</p>
+                        <p>@{{user.role}}</p>
                     </td>
                     <td>
-                        <p>@{{user.role}}{{--$user->role--}}</p>
+                        <p>@{{user.active}}</p>
                     </td>
                     <td>
-                        <p>@{{user.active}}{{--$user->active--}}</p>
+                        <a href="/admin/users/@{{user.id}}">Изменить</a>
                     </td>
                     <td>
-                        <a href="/admin/users/@{{user.id}}{{--$user->id--}}">Изменить</a>
-                    </td>
-                    <td>
-                        <a href="/admin/users/@{{user.id}}{{--$user->id--}}">Удалить</a>
+                        <a href="/admin/users/@{{user.id}}">Удалить</a>
                     </td>
                 </tr>
                 </tbody>

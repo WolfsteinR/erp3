@@ -26,16 +26,21 @@ Route::group(['middleware' => 'auth'], function () {
     }); // administrator page
     Route::get('/admin/users', 'UsersController@index'); // list users on administrator page
     Route::get('/admin/users/{id}', 'UsersController@show'); // show user info and form for edit them
-    Route::get('/admin/companies', 'CompanyController@index');
+    Route::get('/admin/companies', 'CompanyController@index'); //show all companies
+    Route::get('/admin/tasks', 'TasksController@index'); //show all tasks
+    Route::get('/admin/create-task/{id}', function() {
+        return view('forms.task_form', ['link'=>'create-task']);
+    }); // show form for creating tasks
+    Route::get('/admin/update-task/{id}', 'TasksController@edit');
     Route::post('/admin/users/user-edit/{id}', 'UsersController@update'); // post info from from editing user
     Route::get('/admin/create-company/{id}', function() {
         return view('forms.company_form', ['link'=>'create-company']);
     }); //form for clients add info about them company
-    Route::get('/admin/edit-company/{id}', 'CompanyController@edit'//function() {
-        //return view('forms.company_form', ['link'=>'update-company']);
-    ); //form for clients edit info about them company
+    Route::get('/admin/edit-company/{id}', 'CompanyController@edit'); //form for clients edit info about them company
     Route::post('/admin/create-company/{id}', 'CompanyController@create');
     Route::post('/admin/update-company/{id}', 'CompanyController@update');
+    Route::post('/admin/create-task/{id}', 'TasksController@create'); // client create new task
+    Route::post('/admin/update-task/{id}', 'TasksController@update'); // client update new task
 });
 //Auth::routes();
 //Auth Routes

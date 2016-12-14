@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Task;
 
 class TasksController extends Controller
 {
@@ -22,9 +23,12 @@ class TasksController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        $task = new Task;
+        $task->name = $request->input('name');
+        $task->save();
+        return redirect('/admin');
     }
 
     /**
@@ -57,7 +61,8 @@ class TasksController extends Controller
      */
     public function edit($id)
     {
-        //
+        $task = Task::where('author_id', $id)->first();
+        return view('forms.task_form', ['link'=>'update-task', 'task'=>$task]);
     }
 
     /**
@@ -69,7 +74,14 @@ class TasksController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $task = Task::where('author_id', $id)->first();
+        if(!empty($request->input('name')))
+        {
+            $task->name = $request->input('name');
+        }
+
+        $task->save();
+        return redirect('/admin');
     }
 
     /**

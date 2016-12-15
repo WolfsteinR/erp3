@@ -14,6 +14,7 @@
                         <tr>
                             <th>Название компании</th>
                             <th>Сайт</th>
+                            <th>Клиент</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -21,6 +22,7 @@
                             <tr>
                                 <td>{{$company->name}}</td>
                                 <td>{{$company->website}}</td>
+                                <td></td>
                             </tr>
                     @endforeach
                         </tbody>

@@ -16,4 +16,10 @@ class Company extends Model
     protected $fillable = [
         'name', 'website'
     ];
+
+    protected $table = 'companies'; // table name
+
+    public function user() {
+        return $this->belongsTo('User', 'client_id');
+    }
 }

@@ -1,1 +1,1 @@
-<p>test</p>
+<p>Зарегистрировался новый пользователь. <a href="http://lara.wolfsz.ru">ERP</a></p>

@@ -27,4 +27,10 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+    protected $table = 'users'; // имя таблицы
+
+    public function companies() {
+        return $this->hasMany('Company', 'client_id');
+    }
+
 }

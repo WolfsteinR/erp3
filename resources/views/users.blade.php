@@ -6,9 +6,9 @@
         <div class="col-md-12">
             <h1>Список пользователей тестовой ERP</h1>
 
-            @if (!$users->count())
-                There is no post till now. Login and write a new post now!!!
-            @else
+            <p><input type="text" class="form-control" ng-model="search" placeholder="Поиск"></p>
+            <div ng-init='users = <?php echo $users; ?>'></div>
+
             <table class="table">
                 <thead>
                 <tr>
@@ -19,31 +19,30 @@
                 </tr>
                 </thead>
                 <tbody>
-                @foreach ($users as $user)
-                    <tr @if ($user->active == 1) class="success" @else class="danger" @endif >
-                        <td>
-                            <p>{{$user->name}}</p>
-                        </td>
-                        <td>
-                            <p>{{$user->email}}</p>
-                        </td>
-                        <td>
-                            <p>{{$user->role}}</p>
-                        </td>
-                        <td>
-                            <p>{{$user->active}}</p>
-                        </td>
-                        <td>
-                            <a href="/admin/users/{{$user->id}}">Изменить</a>
-                        </td>
-                        <td>
-                            <a href="/admin/users/{{$user->id}}">Удалить</a>
-                        </td>
-                    </tr>
-                @endforeach
+                <tr ng-repeat="user in users.data | filter : search" @verbatim class="active{{ user.active }}" @endverbatim>
+                    @verbatim
+                    <td>
+                        <p>{{ user.name }}</p>
+                    </td>
+                    @endverbatim
+                    <td>
+                        <p>@{{user.email}}</p>
+                    </td>
+                    <td>
+                        <p>@{{user.role}}</p>
+                    </td>
+                    <td>
+                        <p>@{{user.active}}</p>
+                    </td>
+                    <td>
+                        <a href="/admin/users/@{{user.id}}">Изменить</a>
+                    </td>
+                    <td>
+                        <a href="/admin/users/@{{user.id}}">Удалить</a>
+                    </td>
+                </tr>
                 </tbody>
             </table>
-            @endif
         </div>
     </div>
 </div>

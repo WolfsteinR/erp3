@@ -15,7 +15,7 @@ class UsersController extends Controller
      */
     public function index()
     {
-        $users = User::orderBy('created_at')->paginate(10);
+        $users = json_encode(User::orderBy('created_at')->paginate(0));
         // page Heading
         $title = 'Users';
         // return to our view (home.blade.php)
@@ -84,11 +84,15 @@ class UsersController extends Controller
         {
             $user->name = $request->input('name');
         }
-        if(!empty($request->input('active')))
+        if($request->input('active') !== NULL)
         {
             $user->active = 1;
         }
-        if(!empty($request->input('rule')) || $request->input('rule') != 'Выберите роль')
+        else
+        {
+            $user->active = 0;
+        }
+        if(!empty($request->input('rule')) && $request->input('rule') != 'Выберите роль')
         {
             $user->role = $request->input('rule');
             if($user->active == 1) {

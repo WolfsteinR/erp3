@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="ru" ng-app>
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -13,7 +13,9 @@
     <!-- Styles -->
     <link href="/public/css/bootstrap.min.css" rel="stylesheet">
     <link href="/public/css/bootstrap-theme.min.css" rel="stylesheet">
+    <link href="/public/css/style.css" rel="stylesheet">
 
+    <script src="/public/js/angular.min.js"></script>
     <!-- Scripts -->
     <script>
         window.Laravel = <?php echo json_encode([

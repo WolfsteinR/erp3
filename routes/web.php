@@ -48,3 +48,4 @@ Route::post('/login', 'Auth\LoginController@login');//Route::post('/login', 'Aut
 Route::post('/register', 'Auth\RegisterController@register');
 Route::post('/logout', 'Auth\LoginController@logout')->name('logout');
 //Route::get('/home', 'HomeController@index');
+//

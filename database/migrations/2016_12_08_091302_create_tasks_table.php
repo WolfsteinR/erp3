@@ -16,7 +16,7 @@ class CreateTasksTable extends Migration
         // posts tasks
         Schema::create('tasks', function(Blueprint $table){
             $table->increments('id'); // table Id's
-            $table -> integer('author_id')->unsigned()->default(0);
+            $table->integer('author_id')->unsigned()->default(0);
             $table->foreign('author_id')
                 ->references('id')->on('users')
                 ->onDelete('cascade');
@@ -25,6 +25,7 @@ class CreateTasksTable extends Migration
             $table->text('body'); // our tasks
             $table->string('slug')->unique();
             $table->boolean('active');
+            $table->integer('spec_id')->unsigned()->default(0);
             $table->timestamps();
         });
     }

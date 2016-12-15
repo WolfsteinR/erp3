@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Http\Request;
 use App\Company;
 use App\User;
@@ -38,7 +39,7 @@ class CompanyController extends Controller
         Mail::send('emails.new_company', ['name' => $company->name, 'message' => 'Message'], function ($message) use ($company)
         {
             $message->from('wolfsz@yandex.ru', 'Test.ERP');
-            $message->to($company->email);
+            $message->to('wolfsz@yandex.ru');
         }); // send email about new company in ERP system
         return redirect('/admin');
     }

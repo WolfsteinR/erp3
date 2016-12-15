@@ -11,6 +11,7 @@
                         <label for="exampleInputName">Name</label>
                         <input type="text" class="form-control" name="name" id="exampleInputName" placeholder="@if(!empty($task->name)) {{$task->name}} @endif" />
                     </div>
+                    <!-- select с выбором сайта (в зависимости от фирмы) -->
                     <div class="checkbox">
                         <label>
                             <input type="checkbox" name="active" @if(!empty($task->active) && $task->active == 1)checked @endif> Статус (активный/не активный)

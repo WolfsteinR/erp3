@@ -18,7 +18,7 @@ class CreateCompaniesTable extends Migration
             $table->string('name');
             $table->string('website');
             $table->string('client_id');
-            $table->string('manager_id');
+            $table->string('manager_id')->default(0);
             $table->timestamps();
         });
     }

@@ -22,7 +22,7 @@
                             <tr>
                                 <td>{{$company->name}}</td>
                                 <td>{{$company->website}}</td>
-                                <td></td>
+                                <td>{{$company->user->name}}</td>
                             </tr>
                     @endforeach
                         </tbody>

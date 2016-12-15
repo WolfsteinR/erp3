@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\User;
 
 class Company extends Model
 {
@@ -20,6 +21,6 @@ class Company extends Model
     protected $table = 'companies'; // table name
 
     public function user() {
-        return $this->belongsTo('User', 'client_id');
+        return $this->belongsTo('App\User', 'client_id');
     }
 }

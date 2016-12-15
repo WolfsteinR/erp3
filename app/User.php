@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use App\Company;
 
 class User extends Authenticatable
 {
@@ -30,7 +31,7 @@ class User extends Authenticatable
     protected $table = 'users'; // имя таблицы
 
     public function companies() {
-        return $this->hasMany('Company', 'client_id');
+        return $this->hasMany('App\Company', 'id');
     }
 
 }

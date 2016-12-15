@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Company;
+use App\User;
 
 class CompanyController extends Controller
 {
@@ -15,7 +16,7 @@ class CompanyController extends Controller
     public function index()
     {
         //$companies = Company::orderBy('created_at')->paginate(0);
-        $companies = Company::with('user')->get();
+        $companies = Company::with('User')->get();
         return view('companies')->withCompanies($companies);
     }
 

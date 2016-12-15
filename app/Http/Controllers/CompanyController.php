@@ -16,7 +16,7 @@ class CompanyController extends Controller
     public function index()
     {
         //$companies = Company::orderBy('created_at')->paginate(0);
-        $companies = Company::with('User')->get();
+        $companies = Company::with('User')->paginate(0);
         return view('companies')->withCompanies($companies);
     }
 
@@ -32,6 +32,11 @@ class CompanyController extends Controller
         $company->website = $request->input('website');
         $company->client_id = $request->input('user_id');
         $company->save();
+        Mail::send('emails.new_company', ['name' => $company->name, 'message' => 'Message'], function ($message) use ($company)
+        {
+            $message->from('wolfsz@yandex.ru', 'Test.ERP');
+            $message->to($company->email);
+        }); // send email about new company in ERP system
         return redirect('/admin');
     }
 

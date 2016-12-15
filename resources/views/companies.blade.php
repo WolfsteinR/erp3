@@ -15,6 +15,7 @@
                             <th>Название компании</th>
                             <th>Сайт</th>
                             <th>Клиент</th>
+                            <th>Менеджер</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -22,7 +23,8 @@
                             <tr>
                                 <td>{{$company->name}}</td>
                                 <td>{{$company->website}}</td>
-                                <td>{{$company->user->name}}</td>
+                                <td>@if($company->user[0]->role == 'client') {{$company->user[0]->name}} @endif</td>
+                                <td>@if($company->user[1]->role == 'manager') {{$company->user[1]->name}} @endif</td>
                             </tr>
                     @endforeach
                         </tbody>

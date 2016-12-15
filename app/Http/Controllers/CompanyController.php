@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Company;
 use App\User;
@@ -30,8 +31,10 @@ class CompanyController extends Controller
         $company = new Company;
         $company->name = $request->input('name');
         $company->website = $request->input('website');
-        $company->client_id = $request->input('user_id');
+        //$company->client_id = $request->input('user_id');
         $company->save();
+        DB::insert('insert into user_in_company (id_company, id_user) values (?, ?)', [$company->id, $request->input('user_id')]);
+
         Mail::send('emails.new_company', ['name' => $company->name, 'message' => 'Message'], function ($message) use ($company)
         {
             $message->from('wolfsz@yandex.ru', 'Test.ERP');
@@ -106,5 +109,18 @@ class CompanyController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    /* Form add manager to company */
+    public function form_add_manager_to_company()
+    {
+        $managers = User::where('role', 'manager')->paginate(0);
+        $companies = Company::orderBy('created_at')->paginate(0); //выводить только формы без менеджеров???
+        return view('forms.add_manager_to_company', ['managers'=>$managers, 'companies'=>$companies]);
+    }
+    /* Add manager to company */
+    public function add_manager_to_company()
+    {
+
     }
 }

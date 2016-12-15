@@ -15,6 +15,7 @@
                         <label for="exampleInputWebsite">Website</label>
                         <input type="text" class="form-control" name="website" id="exampleInputWebsite" placeholder="@if(!empty($company->website)) {{$company->website}} @endif {{--$user->email--}}">
                     </div>
+
                     <input type="hidden" name="user_id" value="{{Auth::user()->id}}">
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                     <button type="submit" class="btn btn-default">Submit</button>

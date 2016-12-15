@@ -20,11 +20,11 @@
                         </thead>
                         <tbody>
                     @foreach ($companies as $company)
-                            <tr>
+                            <tr @if($company->user->count()) class="success" @else class="danger" @endif>
                                 <td>{{$company->name}}</td>
                                 <td>{{$company->website}}</td>
-                                <td>@if($company->user[0]->role == 'client') {{$company->user[0]->name}} @endif</td>
-                                <td>@if($company->user[1]->role == 'manager') {{$company->user[1]->name}} @endif</td>
+                                <td>@if($company->user->count()) @if($company->user[0]->role == 'client') {{$company->user[0]->name}} @endif @endif</td>
+                                <td>@if($company->user->count()) @if($company->user[1]->role == 'manager') {{$company->user[1]->name}} @endif @endif</td>
                             </tr>
                     @endforeach
                         </tbody>

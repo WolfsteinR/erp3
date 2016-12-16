@@ -14,7 +14,7 @@
                     <div class="form-group">
                         <!-- поле с сайтом фирмы -->
                         <label for="exampleInputWebsite">Website</label>
-                        <input type="text" class="form-control" name="name" id="exampleInputWebsite" placeholder="@if(!empty($company)) {{$task->website}} @endif" />
+                        <input type="text" class="form-control" name="name" id="exampleInputWebsite" placeholder="@if(!empty($company)) {{$company->website}} @endif" />
                     </div>
                     <div class="checkbox">
                         <label>

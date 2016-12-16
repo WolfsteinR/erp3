@@ -91,6 +91,15 @@
                 <p><a href="/admin/create-task/{{Auth::user()->id}}">Создать задачу</a></p>
             @endif
 
+            @if (Auth::user()->role == 'manager')
+                <p><a href="/admin/specialists">Сотрудники</a></p>
+                <p><a href="/admin/tasks">Список задач</a></p>
+            @endif
+
+            @if (Auth::user()->role == 'specialist')
+                <p><a href="/admin/tasks">Список задач</a></p>
+            @endif
+
         @endif
     </div>
 @endsection

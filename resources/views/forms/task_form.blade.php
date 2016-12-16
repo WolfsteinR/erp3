@@ -6,7 +6,7 @@
             <div class="col-md-12">
                 <h1>Добавление / редактирование задачи</h1>
                 <p><a href="/admin">Назад</a></p>
-                <form method="post" action="/admin/{{$link}}/{{Auth::user()->id}}">
+                <form method="post" action="/admin/{{$link}}/{{Auth::user()->id}}" enctype="multipart/form-data">
                     <div class="form-group">
                         <label for="exampleInputName">Title</label>
                         <input type="text" class="form-control" name="name" id="exampleInputName" placeholder="@if(!empty($task)) {{$task->name}} @endif" />
@@ -24,6 +24,13 @@
                         <label>
                             <input type="checkbox" name="active" @if(!empty($task) && $task->active == 1)checked @endif> Статус (активный/не активный)
                         </label>
+                    </div>
+                    <!-- приоритет задачи -->
+                    @if(Auth::user()->role == 'manager')
+                        <!-- select выбор исполнителя -->
+                    @endif
+                    <div class="form-group">
+                        <input type="file" name="file" class="form-control">
                     </div>
                     <input type="hidden" name="user_id" value="{{Auth::user()->id}}"/>
                     <input type="hidden" name="_token" value="{{ csrf_token() }}"/>

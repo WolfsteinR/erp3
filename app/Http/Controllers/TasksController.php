@@ -30,6 +30,15 @@ class TasksController extends Controller
         $task = new Task;
         $task->name = $request->input('name');
         $task->author_id = $request->input('user_id');
+        $task->body = $request->input('body');
+        if($request->input('active') !== NULL)
+        {
+            $task->active = 1;
+        }
+        else
+        {
+            $task->active = 0;
+        }
         $task->save();
         return redirect('/admin');
     }

@@ -21,8 +21,8 @@ class CreateTasksTable extends Migration
                 ->references('id')->on('users')
                 ->onDelete('cascade');
             $table->string('title')->unique();
-            $table->string('description');
             $table->text('body'); // our tasks
+            $table->text('desc_manager'); // comments by manager about task
             $table->string('slug')->unique();
             $table->boolean('active');
             $table->integer('spec_id')->unsigned()->default(0);

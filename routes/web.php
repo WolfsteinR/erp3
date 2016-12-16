@@ -28,9 +28,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/admin/users/{id}', 'UsersController@show'); // show user info and form for edit them
     Route::get('/admin/companies', 'CompanyController@index'); //show all companies
     Route::get('/admin/tasks', 'TasksController@index'); //show all tasks
-    Route::get('/admin/create-task/{id}', function() {
-        return view('forms.task_form', ['link'=>'create-task']);
-    }); // show form for creating tasks
+    Route::get('/admin/create-task/{id}', 'TasksController@edit' //function() {
+        //return view('forms.task_form', ['link'=>'create-task']);
+    /*}*/); // show form for creating tasks
     Route::get('/admin/update-task/{id}', 'TasksController@edit');
     Route::post('/admin/users/user-edit/{id}', 'UsersController@update'); // post info from from editing user
     Route::get('/admin/create-company/{id}', function() {

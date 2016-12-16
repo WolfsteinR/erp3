@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Task;
+use App\Company;
 
 class TasksController extends Controller
 {
@@ -63,8 +65,12 @@ class TasksController extends Controller
     public function edit($id)
     {
         $task = Task::where('author_id', $id)->first();
-        //$websites - ;
-        return view('forms.task_form', ['link'=>'update-task', 'task'=>$task]);
+        //$websites = 1;
+        //$websites = Task::with('Company')->paginate(0);
+        //$websites = DB::select('select * from user_in_company where id_user = :id_user', ['id_user' => $id]);
+        $query = DB::select('select id_company from user_in_company where id_user = ? limit 1', [$id]); //клиент ведет одну фирму с одним сайтом, поэтому получаем только один сайт
+        $company = Company::where('id', $query[0]->id_company)->first();
+        return view('forms.task_form', ['link'=>'update-task', 'task'=>$task, 'company'=>$company]);
     }
 
     /**

@@ -9,12 +9,16 @@
                 <form method="post" action="/admin/{{$link}}/{{Auth::user()->id}}">
                     <div class="form-group">
                         <label for="exampleInputName">Name</label>
-                        <input type="text" class="form-control" name="name" id="exampleInputName" placeholder="@if(!empty($task->name)) {{$task->name}} @endif" />
+                        <input type="text" class="form-control" name="name" id="exampleInputName" placeholder="@if(!empty($task)) {{$task->name}} @endif" />
                     </div>
-                    <!-- select с выбором сайта (в зависимости от фирмы) -->
+                    <div class="form-group">
+                        <!-- поле с сайтом фирмы -->
+                        <label for="exampleInputWebsite">Website</label>
+                        <input type="text" class="form-control" name="name" id="exampleInputWebsite" placeholder="@if(!empty($company)) {{$task->website}} @endif" />
+                    </div>
                     <div class="checkbox">
                         <label>
-                            <input type="checkbox" name="active" @if(!empty($task->active) && $task->active == 1)checked @endif> Статус (активный/не активный)
+                            <input type="checkbox" name="active" @if(!empty($task) && $task->active == 1)checked @endif> Статус (активный/не активный)
                         </label>
                     </div>
                     <input type="hidden" name="user_id" value="{{Auth::user()->id}}"/>

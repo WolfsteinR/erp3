@@ -8,13 +8,17 @@
                 <p><a href="/admin">Назад</a></p>
                 <form method="post" action="/admin/{{$link}}/{{Auth::user()->id}}">
                     <div class="form-group">
-                        <label for="exampleInputName">Name</label>
+                        <label for="exampleInputName">Title</label>
                         <input type="text" class="form-control" name="name" id="exampleInputName" placeholder="@if(!empty($task)) {{$task->name}} @endif" />
                     </div>
                     <div class="form-group">
                         <!-- поле с сайтом фирмы -->
                         <label for="exampleInputWebsite">Website</label>
-                        <input type="text" class="form-control" name="name" id="exampleInputWebsite" placeholder="@if(!empty($company)) {{$company->website}} @endif" />
+                        <input type="text" class="form-control" name="name" id="exampleInputWebsite" value="@if(!empty($company)) {{$company->website}} @endif" />
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputText">Текст задачи</label>
+                        <textarea name="body" class="form-control" id="exampleInputText" cols="30" rows="10">@if(!empty($task)) {{$task->text}} @endif</textarea>
                     </div>
                     <div class="checkbox">
                         <label>

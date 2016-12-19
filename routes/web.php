@@ -38,6 +38,10 @@ Route::group(['middleware' => 'auth'], function () {
     }); //form for clients add info about them company
     Route::get('/admin/edit-company/{id}', 'CompanyController@edit'); //form for clients edit info about them company
     Route::get('/admin/add-manager-to-company', 'CompanyController@form_add_manager_to_company'); // form for adding manager to company
+
+    Route::get('upload', 'UploadsController@index');
+    Route::post('upload/uploadFiles', 'UploadsController@multiple_upload');
+
     Route::post('/admin/add-manager-to-company', 'CompanyController@add_manager_to_company');
     Route::post('/admin/create-company/{id}', 'CompanyController@create');
     Route::post('/admin/update-company/{id}', 'CompanyController@update');

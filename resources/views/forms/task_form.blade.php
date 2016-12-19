@@ -25,7 +25,14 @@
                             <input type="checkbox" name="active" @if(!empty($task) && $task->active == 1)checked @endif> Статус (активный/не активный)
                         </label>
                     </div>
-                    <!-- приоритет задачи -->
+                    <div class="form-group">
+                        <!-- приоритет задачи -->
+                        <select class="form-control" name="priority">
+                            <option value="high">Высокий</option>
+                            <option value="medium">Средний</option>
+                            <option value="low">Низкий</option>
+                        </select>
+                    </div>
                     @if(Auth::user()->role == 'manager')
                         <!-- select выбор исполнителя -->
                     @endif

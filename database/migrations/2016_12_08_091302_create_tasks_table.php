@@ -23,6 +23,7 @@ class CreateTasksTable extends Migration
             $table->string('title')->unique();
             $table->text('body'); // our tasks
             $table->text('desc_manager'); // comments by manager about task
+            $table->enum('priority', ['low','medium','high']); // priority task
             $table->string('slug')->unique();
             $table->boolean('active');
             $table->integer('spec_id')->unsigned()->default(0);

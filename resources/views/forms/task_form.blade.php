@@ -14,7 +14,7 @@
                     <div class="form-group">
                         <!-- поле с сайтом фирмы -->
                         <label for="exampleInputWebsite">Website</label>
-                        <input type="text" class="form-control" name="name" id="exampleInputWebsite" value="@if(!empty($company)) {{$company->website}} @endif" />
+                        <input type="text" class="form-control" name="name" id="exampleInputWebsite" value="@if(!empty($company)) {{--$company->website--}} @endif" /><!--@if(!empty($company)) {{--$company->website--}} @endif-->
                     </div>
                     <div class="form-group">
                         <label for="exampleInputText">Текст задачи</label>
@@ -27,6 +27,7 @@
                     </div>
                     <div class="form-group">
                         <!-- приоритет задачи -->
+                        <label for="">Приоритет задачи</label>
                         <select class="form-control" name="priority">
                             <option value="high">Высокий</option>
                             <option value="medium">Средний</option>
@@ -35,13 +36,15 @@
                     </div>
                     @if(Auth::user()->role == 'manager')
                         <!-- select выбор исполнителя -->
+                        <p>Добавить назначение исполнителя</p>
                     @endif
                     <div class="form-group">
+                        <label for="">Потом реализовать загрузку файла</label>
                         <input type="file" name="file" class="form-control">
                     </div>
                     <input type="hidden" name="user_id" value="{{Auth::user()->id}}"/>
                     <input type="hidden" name="_token" value="{{ csrf_token() }}"/>
-                    <button type="submit" class="btn btn-default">Submit</button>
+                    <button type="submit" class="btn btn-default">Добавить задачу</button>
                 </form>
 
             </div>

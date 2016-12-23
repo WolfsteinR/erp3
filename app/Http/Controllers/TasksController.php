@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use App\Task;
 use App\Company;
 
+
 class TasksController extends Controller
 {
     /**
@@ -27,6 +28,17 @@ class TasksController extends Controller
      */
     public function create(Request $request)
     {
+        return view('forms.task_form', ['link'=>'create-task']);
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
         $task = new Task;
         $task->name = $request->input('name');
         $task->author_id = $request->input('user_id');
@@ -39,19 +51,9 @@ class TasksController extends Controller
         {
             $task->active = 0;
         }
+        $task->priority = $request->input('priority');
         $task->save();
         return redirect('/admin');
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
     }
 
     /**
@@ -73,13 +75,15 @@ class TasksController extends Controller
      */
     public function edit($id)
     {
-        $task = Task::where('author_id', $id)->first();
+        // $id - это должен быть id задачи, но сейчас это id менеджера и в форму подгружается адрес его сайта
+        // Тут нужно разделение - создаем новую задачу, значит link - create-task А если открыли уже текущую, передаем сюда id задачи и подгружаем данные в форму, link будет update-task
+        //$task = Task::where('author_id', $id)->first();
         //$websites = 1;
         //$websites = Task::with('Company')->paginate(0);
         //$websites = DB::select('select * from user_in_company where id_user = :id_user', ['id_user' => $id]);
-        $query = DB::select('select id_company from user_in_company where id_user = ? limit 1', [$id]); //клиент ведет одну фирму с одним сайтом, поэтому получаем только один сайт
+        $query = DB::select('select id_company from user_in_company where id_user = ? limit 1', [Auth::user()->id]); //клиент ведет одну фирму с одним сайтом, поэтому получаем только один сайт
         $company = Company::where('id', $query[0]->id_company)->first();
-        return view('forms.task_form', ['link'=>'update-task', 'task'=>$task, 'company'=>$company]);
+        return view('forms.task_form', ['link'=>'create-task', /*'task'=>$task,*/ 'company'=>$company]);
     }
 
     /**

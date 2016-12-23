@@ -4,7 +4,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <h1>Добро пожаловать в тестовую ERP</h1>
+                <h1>Добро пожаловать <!--в тестовую ERP--></h1>
             </div>
         </div>
 
@@ -88,7 +88,7 @@
                 <p><a href="/admin/create-company/{{Auth::user()->id}}">Добавить новую компанию</a></p>
                 <p><a href="/admin/edit-company/{{Auth::user()->id}}">Редактировать компанию</a></p>
                 <p><a href="/admin/tasks--">Список задач</a></p> <!-- тут должен быть список своих задач -->
-                <p><a href="/admin/create-task/{{Auth::user()->id}}">Создать задачу</a></p>
+                <p><a href="/admin/create-task{{--Auth::user()->id--}}">Создать задачу</a></p>
             @endif
 
             @if (Auth::user()->role == 'manager')

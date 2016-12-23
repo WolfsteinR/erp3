@@ -4,7 +4,7 @@
 <div class="container">
     <div class="row">
         <div class="col-md-12">
-            <h1>Добро пожаловать в тестовую ERP</h1>
+            <h1>Добро пожаловать <!--в тестовую ERP--></h1>
         </div>
     </div>
 

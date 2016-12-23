@@ -40,9 +40,10 @@ class TasksController extends Controller
     public function store(Request $request)
     {
         $task = new Task;
-        $task->name = $request->input('name');
+        $task->title = $request->input('title');
         $task->author_id = $request->input('user_id');
         $task->body = $request->input('body');
+        $task->website = $request->input('website');
         if($request->input('active') !== NULL)
         {
             $task->active = 1;

@@ -9,12 +9,12 @@
                 <form method="post" action="/admin/{{$link}}/{{Auth::user()->id}}" enctype="multipart/form-data">
                     <div class="form-group">
                         <label for="exampleInputName">Title</label>
-                        <input type="text" class="form-control" name="name" id="exampleInputName" placeholder="@if(!empty($task)) {{$task->name}} @endif" />
+                        <input type="text" class="form-control" name="title" id="exampleInputName" placeholder="@if(!empty($task)) {{$task->name}} @endif" />
                     </div>
                     <div class="form-group">
                         <!-- поле с сайтом фирмы -->
                         <label for="exampleInputWebsite">Website</label>
-                        <input type="text" class="form-control" name="name" id="exampleInputWebsite" value="@if(!empty($company)) {{--$company->website--}} @endif" /><!--@if(!empty($company)) {{--$company->website--}} @endif-->
+                        <input type="text" class="form-control" name="website" id="exampleInputWebsite" value="@if(!empty($company)) {{--$company->website--}} @endif" /><!--@if(!empty($company)) {{--$company->website--}} @endif-->
                     </div>
                     <div class="form-group">
                         <label for="exampleInputText">Текст задачи</label>

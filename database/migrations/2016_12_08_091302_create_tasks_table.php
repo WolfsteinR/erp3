@@ -28,7 +28,7 @@ class CreateTasksTable extends Migration
                 ->references('id')->on('upload');
             $table->string('title')->unique();
             $table->text('body'); // our tasks
-            $table->boolean('hide_body');
+            $table->boolean('hide_body')->nullable();
             $table->string('website');
             $table->text('desc_manager')->nullable(); // comments by manager about task
             $table->enum('priority', ['low','medium','high']); // priority task

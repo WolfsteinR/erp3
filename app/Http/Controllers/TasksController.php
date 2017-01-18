@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Auth;
 use App\Task;
+use App\User;
 use App\Company;
 
 
@@ -18,7 +20,34 @@ class TasksController extends Controller
      */
     public function index()
     {
-        $tasks = Task::orderBy('created_at')->paginate(0);
+        $tasks = '';
+        if(Auth::user()->role == 'client') {
+            //видит свои задачи
+            $tasks = Task::where('author_id', Auth::user()->id)->paginate(0);
+        }
+        elseif(Auth::user()->role == 'manager') {
+            $companys_id = array();
+            $users_id = array();
+            //$tasks = array();
+            $companys_id = DB::select('select id_company from user_in_company where id_user = ?', [Auth::user()->id]);
+            foreach ($companys_id as $cid) {
+                $users_id[] = DB::select('select id_user from user_in_company where id_company = ?', [$cid->id_company]);
+            }
+
+            $i = 0;
+            $uids = array();
+            foreach ($users_id as $uid) {
+                $uids[] = $uid[$i]->id_user;
+                $i++;
+            }
+
+            //foreach ($users_id as $uid) {
+                $tasks = Task::whereIn('author_id', $uids)->leftJoin('users', 'users.id', '=', 'tasks.author_id')->paginate(0);
+            print '<pre>';print_r($tasks);exit;
+                //$i++;
+            //}
+        }
+        //$tasks = Task::orderBy('created_at')->paginate(0);
         return view('tasks')->withTasks($tasks);
     }
 
@@ -149,9 +178,20 @@ class TasksController extends Controller
         //$websites = 1;
         //$websites = Task::with('Company')->paginate(0);
         //$websites = DB::select('select * from user_in_company where id_user = :id_user', ['id_user' => $id]);
+        $task = '';
+        $link = 'create-task';
+        $specialists = '';
+        if(!empty($id)) {
+            $task = Task::where('id', $id)->first();
+            $link = 'update-task';
+        }
+        // If user role is manager, then loading specialists from database
+        if(Auth::user()->role == 'manager') {
+            $specialists = User::where('role', 'spec')->paginate(0);
+        }
         $query = DB::select('select id_company from user_in_company where id_user = ? limit 1', [Auth::user()->id]); //клиент ведет одну фирму с одним сайтом, поэтому получаем только один сайт
         $company = Company::where('id', $query[0]->id_company)->first();
-        return view('forms.task_form', ['link'=>'create-task', /*'task'=>$task,*/ 'company'=>$company]);
+        return view('forms.task_form', ['link'=>$link, 'task'=>$task, 'company'=>$company, 'specialists'=>$specialists]);
     }
 
     /**
@@ -163,11 +203,26 @@ class TasksController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $task = Task::where('author_id', $id)->first();
-        if(!empty($request->input('name')))
-        {
-            $task->name = $request->input('name');
-        }
+        $task = Task::where('id', $id)->first();
+        //if(!empty($request->input('title')))
+        //{
+            $task->title = $request->input('title');
+            $task->body = $request->input('body');
+            $task->website = $request->input('website');
+            if($request->input('active') !== NULL)
+            {
+                $task->active = 1;
+            }
+            else
+            {
+                $task->active = 0;
+            }
+            $task->priority = $request->input('priority');
+            if($request->input('spec') != '') {
+                $task->spec_id = $request->input('spec');
+            }
+        // обновлять updated_at
+        //}
 
         $task->save();
         return redirect('/admin');

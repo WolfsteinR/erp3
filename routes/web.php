@@ -38,7 +38,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('upload', 'UploadsController@index');
     Route::post('upload/uploadFiles', 'UploadsController@multiple_upload');
 
-    Route::post('/admin/add-manager-to-company', 'CompanyController@add_manager_to_company');
+    Route::post('/admin/add-manager-company', 'CompanyController@add_manager_to_company');
     Route::post('/admin/create-company/{id}', 'CompanyController@create');
     Route::post('/admin/update-company/{id}', 'CompanyController@update');
 

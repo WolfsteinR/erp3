@@ -120,8 +120,9 @@ class CompanyController extends Controller
         return view('forms.add_manager_to_company', ['managers'=>$managers, 'companies'=>$companies]);
     }
     /* Add manager to company */
-    public function add_manager_to_company()
+    public function add_manager_to_company(Request $request)
     {
-
+        DB::insert('insert into user_in_company (id_company, id_user) values (?, ?)', [$request->input('company'), $request->input('manager')]);
+        return redirect('/admin');
     }
 }

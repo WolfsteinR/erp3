@@ -39,6 +39,38 @@ class TasksController extends Controller
      */
     public function store(Request $request)
     {
+        $files = Input::file('images');
+        if($files != '') {
+            $file_count = count($files);
+            $uploadcount = 0;
+
+            foreach ($files as $file) {
+                $rules = array('file' => 'required');
+                $validator = Validator::make(array('file'=>$file), $rules);
+                if($validator->passes()){
+                    $destinationPath = 'uploads'; //upload folder in public directory
+                    $filename = $file->getClientOriginalName();
+                    $upload_success = $file->move($destinationPath, $filename);
+                    $uploadcount ++;
+
+                    //save into database
+                    $extension = $file->getClientOriginalExtension();
+                    $entry = new Uploads();
+                    $entry->mime = $file->getClientMimeType();
+                    $entry->original_filename = $filename;
+                    $entry->filename = $file->getFilename().'.'.$extension;
+                    $entry->save();
+                }
+            }
+            if($uploadcount == $file_count) {
+                Session::flash('success', 'Upload successfully');
+                //return Redirect::to('upload');
+            }
+            //else {
+                //return Redirect::to('upload')->withInput()->withErrors($validator);
+            //}
+        }
+
         $task = new Task;
         $task->title = $request->input('title');
         $task->author_id = $request->input('user_id');
@@ -53,6 +85,9 @@ class TasksController extends Controller
             $task->active = 0;
         }
         $task->priority = $request->input('priority');
+        if(isset($file_count) && $file_count != 0) {
+            $task->upload_id = $entry->id;
+        }
         $task->save();
         return redirect('/admin');
     }

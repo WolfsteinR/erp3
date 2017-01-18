@@ -39,8 +39,8 @@
                         <p>Добавить назначение исполнителя</p>
                     @endif
                     <div class="form-group">
-                        <label for="">Потом реализовать загрузку файла</label>
-                        <input type="file" name="file" class="form-control">
+                        <label for="">Загрузка файлов</label>
+                        <input multiple="1" name="images[]" type="file">
                     </div>
                     <input type="hidden" name="user_id" value="{{Auth::user()->id}}"/>
                     <input type="hidden" name="_token" value="{{ csrf_token() }}"/>

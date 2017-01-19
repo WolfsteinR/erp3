@@ -42,8 +42,8 @@ class TasksController extends Controller
             }
 
             //foreach ($users_id as $uid) {
-                $tasks = Task::whereIn('author_id', $uids)->leftJoin('users', 'users.id', '=', 'tasks.author_id')->paginate(0);
-            print '<pre>';print_r($tasks);exit;
+                $tasks = Task::whereIn('author_id', $uids)->leftJoin('users', 'users.id', '=', 'tasks.spec_id')->paginate(0);
+            //print '<pre>';print_r($tasks);exit;
                 //$i++;
             //}
         }

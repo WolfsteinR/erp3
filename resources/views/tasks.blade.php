@@ -28,7 +28,7 @@
                                 <td>{{$task->website}}</td>
                                 <td>{{$task->created_at}}</td>
                                 @if(Auth::user()->role == 'manager')
-                                    <td>{{$task->name}}</td>
+                                    <td>@if($task->name != ''){{$task->name}}@endif</td>
                                 @endif
                                 <td><a href="/admin/update-task/{{$task->id}}">Редактировать</a></td>
                             </tr>

@@ -80,8 +80,9 @@
             @if (Auth::user()->role == 'admin')
                 <p><a href="/admin/users">Пользователи</a></p>
                 <p><a href="/admin/companies">Компании</a></p>
-                <p><a href="/admin/add-manager-to-company">Добавить менеджера для компании</a></p>
-                <p><a href="/admin/tasks">Список задач</a></p>
+                <!--<p><a href="/admin/add-manager-to-company">Добавить менеджера для компании</a></p>-->
+                <p>Добавить менеджера для клиента</p>
+                <!--<p><a href="/admin/tasks">Список задач</a></p>-->
                 <p>архив задач</p>
             @endif
 

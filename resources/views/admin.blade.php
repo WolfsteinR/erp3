@@ -81,16 +81,29 @@
                 <p><a href="/admin/users">Пользователи</a></p>
                 <p><a href="/admin/companies">Компании</a></p>
                 <!--<p><a href="/admin/add-manager-to-company">Добавить менеджера для компании</a></p>-->
-                <p>Добавить менеджера для клиента</p>
+                <p><a href="/admin/add-manager-to-client">Добавить менеджера для клиента</a></p>
                 <!--<p><a href="/admin/tasks">Список задач</a></p>-->
                 <p>архив задач</p>
             @endif
 
             @if (Auth::user()->role == 'client')
-                <p><a href="/admin/create-company/{{Auth::user()->id}}">Добавить новую компанию</a></p>
+                <p>Порядок действий</p>
+                <ul>
+                    <li>После активации вашего аккаунта создайте свою компанию и заполните информацию о ней</li>
+                    <li>Новые задачи вы сможете создавать только после прикрепления к вам менеджера. Об этом вам придет письмо.</li>
+                </ul>
+                @if(empty($company))
+                    <p><a href="/admin/create-company/{{Auth::user()->id}}">Добавить новую компанию</a></p>
+                @else
+                    <p class="bg-info">Вы уже добавили свою компанию.</p>
+                @endif
                 <p><a href="/admin/edit-company/{{Auth::user()->id}}">Редактировать компанию</a></p>
-                <p><a href="/admin/tasks">Список задач</a></p> <!-- тут должен быть список своих задач -->
-                <p><a href="/admin/create-task{{--Auth::user()->id--}}">Создать задачу</a></p>
+                @if(!empty($manager))
+                    <p><a href="/admin/tasks">Список задач</a></p> <!-- тут должен быть список своих задач -->
+                    <p><a href="/admin/create-task{{--Auth::user()->id--}}">Создать задачу</a></p> <!-- Будет доступно после прикрепления к нему манагера -->
+                @else
+                    <p class="bg-danger">К вам пока не прикреплен ни один менеджер. Как только менеджер будет добавлен, вы сможете создавать новые задачи.</p>
+                @endif
             @endif
 
             @if (Auth::user()->role == 'manager')

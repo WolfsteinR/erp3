@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\User;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\DB;
 
 class UsersController extends Controller
 {
@@ -105,6 +106,31 @@ class UsersController extends Controller
         }
         $user->save();
         return redirect('/admin/users');
+    }
+
+    /**
+     * Form for adding manager to new client
+     */
+    function form_add_manager_to_client()
+    {
+        $managers = User::where('role', 'manager')->paginate(0);
+        $clients = User::where('role', 'client')->orderBy('created_at')->get(); // брать только клиентов без менеджера
+        // Проверяем клиентов на наличие менеджера для них
+        foreach ($clients as $key => $client) {
+            $query = DB::select('select id_client from manager_to_client where id_client = ? limit 1', [$client->id]);
+            if(!empty($query)) {
+                $clients->forget($key);
+            }
+        }
+        return view('forms/add_manager_to_client', ['managers'=>$managers, 'clients'=>$clients]);
+    }
+
+    /**
+     * Adding manager to new client
+     */
+    function add_manager_to_client(Request $request)
+    {
+        //
     }
 
     /**

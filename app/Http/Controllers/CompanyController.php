@@ -113,16 +113,16 @@ class CompanyController extends Controller
     }
 
     /* Form add manager to company */
-    public function form_add_manager_to_company()
+    /*public function form_add_manager_to_company()
     {
         $managers = User::where('role', 'manager')->paginate(0);
         $companies = Company::orderBy('created_at')->paginate(0); //выводить только формы без менеджеров???
         return view('forms.add_manager_to_company', ['managers'=>$managers, 'companies'=>$companies]);
-    }
+    }*/
     /* Add manager to company */
-    public function add_manager_to_company(Request $request)
+    /*public function add_manager_to_company(Request $request)
     {
         DB::insert('insert into user_in_company (id_company, id_user) values (?, ?)', [$request->input('company'), $request->input('manager')]);
         return redirect('/admin');
-    }
+    }*/
 }

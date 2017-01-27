@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\User;
+use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\DB;
+use App\User;
 
 class UsersController extends Controller
 {
@@ -113,6 +114,7 @@ class UsersController extends Controller
      */
     function form_add_manager_to_client()
     {
+        // ПРЕДУСМОТРЕТЬ ПОТОМ изменение менеджера
         $managers = User::where('role', 'manager')->paginate(0);
         $clients = User::where('role', 'client')->orderBy('created_at')->get(); // брать только клиентов без менеджера
         // Проверяем клиентов на наличие менеджера для них
@@ -130,7 +132,8 @@ class UsersController extends Controller
      */
     function add_manager_to_client(Request $request)
     {
-        //
+        DB::insert('insert into manager_to_client (id_manager, id_client) values (?, ?)', [Input::get('manager'), Input::get('client')]);
+        return redirect('/admin/add-manager-to-client');
     }
 
     /**

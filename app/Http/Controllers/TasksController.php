@@ -47,6 +47,10 @@ class TasksController extends Controller
                 //$i++;
             //}
         }
+        elseif(Auth::user()->role == 'specialist') {
+            // получим задачи, назначенные специалисту
+            $tasks = Task::where('spec_id', Auth::user()->id)->get();
+        }
         //$tasks = Task::orderBy('created_at')->paginate(0);
         return view('tasks')->withTasks($tasks);
     }

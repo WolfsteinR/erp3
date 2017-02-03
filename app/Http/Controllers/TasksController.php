@@ -165,7 +165,8 @@ class TasksController extends Controller
      */
     public function show($id)
     {
-        //
+        $task = Task::where('id', $id)->first();
+        return view('task_show', ['task'=>$task]);
     }
 
     /**
@@ -176,6 +177,8 @@ class TasksController extends Controller
      */
     public function edit($id)
     {
+        //Сделать разделение по менеджеру и исполнителю
+
         // $id - это должен быть id задачи, но сейчас это id менеджера и в форму подгружается адрес его сайта
         // Тут нужно разделение - создаем новую задачу, значит link - create-task А если открыли уже текущую, передаем сюда id задачи и подгружаем данные в форму, link будет update-task
         //$task = Task::where('author_id', $id)->first();
@@ -185,6 +188,7 @@ class TasksController extends Controller
         $task = '';
         $link = 'create-task';
         $specialists = '';
+        $company = '';
         if(!empty($id)) {
             $task = Task::where('id', $id)->first();
             $link = 'update-task';
@@ -192,9 +196,10 @@ class TasksController extends Controller
         // If user role is manager, then loading specialists from database
         if(Auth::user()->role == 'manager') {
             $specialists = User::where('role', 'spec')->paginate(0);
+            $query = DB::select('select id_company from user_in_company where id_user = ? limit 1', [Auth::user()->id]); //клиент ведет одну фирму с одним сайтом, поэтому получаем только один сайт
+            $company = Company::where('id', $query[0]->id_company)->first();
         }
-        $query = DB::select('select id_company from user_in_company where id_user = ? limit 1', [Auth::user()->id]); //клиент ведет одну фирму с одним сайтом, поэтому получаем только один сайт
-        $company = Company::where('id', $query[0]->id_company)->first();
+
         return view('forms.task_form', ['link'=>$link, 'task'=>$task, 'company'=>$company, 'specialists'=>$specialists]);
     }
 

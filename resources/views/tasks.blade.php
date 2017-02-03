@@ -7,7 +7,7 @@
                 <h1>Список всех задач</h1>
 
                 @if (!$tasks->count())
-                    There is no post till now. Login and write a new post now!!!
+                    <p><strong>Задачи отсутствуют</strong></p>
                 @else
                     <table class="table">
                         <thead>
@@ -29,8 +29,11 @@
                                 <td>{{$task->created_at}}</td>
                                 @if(Auth::user()->role == 'manager')
                                     <td>@if($task->name != ''){{$task->name}}@endif</td>
+                                    <td><a href="/admin/update-task/{{$task->id}}">Редактировать</a></td>
                                 @endif
-                                <td><a href="/admin/update-task/{{$task->id}}">Редактировать</a></td>
+                                @if(Auth::user()->role == 'specialist')
+                                    <td><a href="/admin/show-task/{{$task->id}}">Посмотреть задачу</a></td>
+                                @endif
                             </tr>
                         @endforeach
                         </tbody>

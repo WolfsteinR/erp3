@@ -58,6 +58,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/admin/tasks', 'TasksController@index'); //show all tasks
     Route::get('/admin/create-task', 'TasksController@create'); // show form for creating tasks
     Route::get('/admin/update-task/{id}', 'TasksController@edit');  // show form for editing tasks
+    Route::get('/admin/show-task/{id}', 'TasksController@show'); // show task for specialist
     Route::post('/admin/create-task/{id}', 'TasksController@store'); // client create new task
     Route::post('/admin/update-task/{id}', 'TasksController@update'); // client update new task
     /* TASKS */

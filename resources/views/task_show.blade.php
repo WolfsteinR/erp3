@@ -33,6 +33,13 @@
 
             <div class="col-md-6">
                 <div class="task_logs">
+                    @if(!empty($logs))
+                        @foreach($logs as $log)
+                            {{$log->status_work}}
+                            {{$log->comment}}
+                            {{$log->created_at}}
+                        @endforeach
+                    @endif
                     <!--
                     Тут будут логи задачи с прокруткой
                     -->
@@ -45,7 +52,7 @@
 
                     <div class="form-group">
                         <!-- приоритет задачи -->
-                        <label for="priority">Статус выполнения</label>
+                        <label for="status_work">Статус выполнения</label>
                         <select class="form-control" name="status_work">
                             <option value="in_work">На исполнении</option>
                             <option value="stop">Приостановлено</option>

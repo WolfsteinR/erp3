@@ -18,7 +18,7 @@ class TaskWorkLog extends Migration
             $table->integer('id_task');
             $table->string('status_work');
             $table->text('comment');
-            $table->dateTime('created_at');
+            $table->timestamp('created_at');
             $table->string('time');
         });
     }

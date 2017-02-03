@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Task;
 use App\User;
 use App\Company;
+use DateTime;
 
 
 class TasksController extends Controller
@@ -166,7 +167,8 @@ class TasksController extends Controller
     public function show($id)
     {
         $task = Task::where('id', $id)->first();
-        return view('task_show', ['task'=>$task]);
+        $logs = DB::select('select id, status_work, comment, created_at from task_work_log where id_task = ?', [$id]);
+        return view('task_show', ['task'=>$task, 'logs'=>$logs]);
     }
 
     /**
@@ -242,21 +244,29 @@ class TasksController extends Controller
      */
     public function work(Request $request, $id)
     {
-        $now = new DateTime();
-        $now->format('Y-m-d H:i:s');
-        $now->getTimestamp();
-        $created_at = $now;
-
         // get this task from table db for writing time
-        $query = DB::select('select id from task_work_log where id_task = ?', [$id]);
+        $query = DB::select('select created_at, status_work from task_work_log where id_task = ?', [$id]);
         if(empty($query)) {
             $time = '';
         }
         else {
+            date_default_timezone_set('Europe/Moscow');
             // Перебираем логи этой задачи и считаем время
+            // Считаем время в зависимости от статуса, то есть учитываем когда задачу ставят на паузу
+            foreach ($query as $value) {
+                //$time = real_date_diff($value->created_at);
+                $datetime1 = new DateTime($value->created_at);
+                $datetime2 = new DateTime(date('Y-m-d H:i:s'));
+                $time = $datetime1->diff($datetime2);
+                //$time = date('Y-m-d H:i:s')->diff($value->created_at);
+            }
+            print '<pre>';
+            print_r(date('Y-m-d H:i:s'));
+            print_r($query);
+            print_r($time); exit;
         }
 
-        DB::insert('insert into task_work_log (id_task, status_work, comment, created_at, time) values (?, ?, ?, ?, ?)', [$id, $request->input['status_work'], Input::get('comment'), $created_at, $time]);
+        DB::insert('insert into task_work_log (id_task, status_work, comment, time) values (?, ?, ?, ?)', [$id, Input::get('status_work'), Input::get('comment'), $time]);
         //id_task
         //status_work
         //comment

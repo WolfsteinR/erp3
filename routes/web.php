@@ -61,6 +61,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/admin/show-task/{id}', 'TasksController@show'); // show task for specialist
     Route::post('/admin/create-task/{id}', 'TasksController@store'); // client create new task
     Route::post('/admin/update-task/{id}', 'TasksController@update'); // client update new task
+    Route::post('/admin/task-work/{id}', 'TasksController@work'); // cpecialist works on the task
     /* TASKS */
 });
 //Auth::routes();

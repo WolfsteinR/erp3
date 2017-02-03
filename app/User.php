@@ -34,4 +34,8 @@ class User extends Authenticatable
         return $this->hasMany('App\Company', 'id');
     }
 
+    /*public function getNameAttribute($value) {
+        return 'User:' . $value;
+    }*/
+
 }

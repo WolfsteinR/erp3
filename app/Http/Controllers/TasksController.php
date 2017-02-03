@@ -238,6 +238,34 @@ class TasksController extends Controller
     }
 
     /**
+     * Specialist works on the task
+     */
+    public function work(Request $request, $id)
+    {
+        $now = new DateTime();
+        $now->format('Y-m-d H:i:s');
+        $now->getTimestamp();
+        $created_at = $now;
+
+        // get this task from table db for writing time
+        $query = DB::select('select id from task_work_log where id_task = ?', [$id]);
+        if(empty($query)) {
+            $time = '';
+        }
+        else {
+            // Перебираем логи этой задачи и считаем время
+        }
+
+        DB::insert('insert into task_work_log (id_task, status_work, comment, created_at, time) values (?, ?, ?, ?, ?)', [$id, $request->input['status_work'], Input::get('comment'), $created_at, $time]);
+        //id_task
+        //status_work
+        //comment
+        //created_at
+        //time
+        return redirect('/admin');
+    }
+
+    /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id

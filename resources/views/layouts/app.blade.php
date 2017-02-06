@@ -13,6 +13,7 @@
     <!-- Styles -->
     <link href="/public/css/bootstrap.min.css" rel="stylesheet">
     <link href="/public/css/bootstrap-theme.min.css" rel="stylesheet">
+    <link href="/public/css/font-awesome.min.css" rel="stylesheet">
     <link href="/public/css/style.css" rel="stylesheet">
 
     <script src="/public/js/angular.min.js"></script>
@@ -49,7 +50,6 @@
                                     @endif
                                 @endif
                                 @if (Auth::user()->role == 'manager')
-                                    <li><a href="/admin/specialists">Сотрудники</a></li>
                                     <li><a href="/admin/tasks">Список задач</a></li>
                                 @endif
                                 @if (Auth::user()->role == 'specialist')
@@ -64,7 +64,7 @@
                         @if (Auth::user())
                             <a href="{{ url('/logout') }}"
                                onclick="event.preventDefault();document.getElementById('logout-form').submit();" class="navbar-link btn">
-                                Выйти ({{Auth::user()->name}})
+                                <i class="fa fa-close" aria-hidden="true"></i> Выйти ({{Auth::user()->name}})
                             </a>
                             <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
                                 {{ csrf_field() }}

@@ -82,9 +82,9 @@ class UsersController extends Controller
     public function update(Request $request, $id)
     {
         $user = User::where('id', $id)->first();
-        if(!empty($request->input('name')))
+        if(!empty($request->input('first_name')))
         {
-            $user->name = $request->input('name');
+            $user->first_name = $request->input('first_name');
         }
         if($request->input('active') !== NULL)
         {
@@ -98,7 +98,7 @@ class UsersController extends Controller
         {
             $user->role = $request->input('rule');
             if($user->active == 1) {
-                Mail::send('emails.activate_user', ['name' => $user->name, 'message' => 'Message'], function ($message) use ($user)
+                Mail::send('emails.activate_user', ['first_name' => $user->first_name, 'message' => 'Message'], function ($message) use ($user)
                 {
                     $message->from('wolfsz@yandex.ru', 'Test.ERP');
                     $message->to($user->email);

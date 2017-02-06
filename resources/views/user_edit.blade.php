@@ -10,7 +10,7 @@
             <form method="post" action="user-edit/{{$user->id}}">
                 <div class="form-group">
                     <label for="exampleInputName">Name</label>
-                    <input type="text" class="form-control" name="name" id="exampleInputName" placeholder="{{$user->name}}">
+                    <input type="text" class="form-control" name="first_name" id="exampleInputName" placeholder="{{$user->first_name}}">
                 </div>
                 <div class="form-group">
                     <label for="exampleInputEmail1">Email</label>

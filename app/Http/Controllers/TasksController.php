@@ -179,14 +179,6 @@ class TasksController extends Controller
      */
     public function edit($id)
     {
-        //Сделать разделение по менеджеру и исполнителю
-
-        // $id - это должен быть id задачи, но сейчас это id менеджера и в форму подгружается адрес его сайта
-        // Тут нужно разделение - создаем новую задачу, значит link - create-task А если открыли уже текущую, передаем сюда id задачи и подгружаем данные в форму, link будет update-task
-        //$task = Task::where('author_id', $id)->first();
-        //$websites = 1;
-        //$websites = Task::with('Company')->paginate(0);
-        //$websites = DB::select('select * from user_in_company where id_user = :id_user', ['id_user' => $id]);
         $task = '';
         $link = 'create-task';
         $specialists = '';
@@ -215,27 +207,32 @@ class TasksController extends Controller
     public function update(Request $request, $id)
     {
         $task = Task::where('id', $id)->first();
-        //if(!empty($request->input('title')))
-        //{
-            $task->title = $request->input('title');
-            $task->body = $request->input('body');
-            $task->website = $request->input('website');
-            if($request->input('active') !== NULL)
-            {
-                $task->active = 1;
-            }
-            else
-            {
-                $task->active = 0;
-            }
-            $task->priority = $request->input('priority');
-            if($request->input('spec') != '') {
-                $task->spec_id = $request->input('spec');
-            }
+        $task->title = $request->input('title');
+        $task->body = $request->input('body');
+        $task->website = $request->input('website');
+        if($request->input('active') !== NULL)
+        {
+            $task->active = 1;
+        }
+        else
+        {
+            $task->active = 0;
+        }
+        $task->priority = $request->input('priority');
+        if($request->input('spec') != '') {
+            $task->spec_id = $request->input('spec');
+        }
         // обновлять updated_at
-        //}
 
         $task->save();
+        $specialist = User::where('id', $task->spec_id);
+        // добавить данные исполнителя из задачи и информацию о задаче
+        Mail::send('emails.edit_task', ['title' => $task->title, 'message' => 'Message'], function ($message) use ($specialist)
+        {
+            $message->from('wolfsz@yandex.ru', 'Test.ERP');
+            $message->to($specialist->email);
+        }); // send email to specialist about editing task from manager
+
         return redirect('/admin');
     }
 

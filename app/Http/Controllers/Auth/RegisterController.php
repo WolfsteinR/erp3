@@ -84,7 +84,7 @@ class RegisterController extends Controller
             $message->from('wolfsz@yandex.ru', 'Scotch.IO');
             $message->to('wolfsz@yandex.ru');
         });
-        return redirect('/');
+        return redirect('/register-success');
 
         //$this->guard()->login($user);
 

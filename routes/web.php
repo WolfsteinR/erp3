@@ -17,8 +17,15 @@ Route::get('/', function () {
 Route::get('/login', function () {
     return redirect('/');
 });
+Route::get('/admin/settings', function(){
+    return view('settings');
+});
+
 //Route::get('/admin', 'UsersController@index');
 Route::get('/register', 'Auth\RegisterController@showRegistrationForm');
+Route::get('register-success', function(){
+    return view('pages.register_success');
+});
 
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/admin', function () {

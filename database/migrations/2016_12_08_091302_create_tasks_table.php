@@ -31,7 +31,7 @@ class CreateTasksTable extends Migration
             $table->boolean('hide_body')->nullable();
             $table->string('website');
             $table->text('desc_manager')->nullable(); // comments by manager about task
-            $table->string('status_work')->nullable();
+            $table->enum('status_work', ['waiting', 'in_work', 'stop', 'job_done']);
             $table->enum('priority', ['low','medium','high']); // priority task
             $table->string('time_limit')->nullable();// time limit for task from manager
             $table->string('time')->nullable(); // time what working our task

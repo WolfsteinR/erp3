@@ -54,7 +54,7 @@
                         <!-- приоритет задачи -->
                         <label for="status_work">Статус выполнения</label>
                         <select class="form-control" name="status_work">
-                            <option value="in_work">На исполнении</option>
+                            @if($task->status_work != 'in_work')<option value="in_work">На исполнении</option>@endif
                             <option value="stop">Приостановлено</option>
                             <option value="job_done">Выполнена</option>
                         </select>

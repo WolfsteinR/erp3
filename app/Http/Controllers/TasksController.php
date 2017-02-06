@@ -244,32 +244,77 @@ class TasksController extends Controller
      */
     public function work(Request $request, $id)
     {
-        // get this task from table db for writing time
-        $query = DB::select('select created_at, status_work from task_work_log where id_task = ?', [$id]);
-        if(empty($query)) {
-            $time = '';
-        }
-        else {
-            date_default_timezone_set('Europe/Moscow');
-            // Перебираем логи этой задачи и считаем время
-            // Считаем время в зависимости от статуса, то есть учитываем когда задачу ставят на паузу
-            // при постановке задачи на паузу или сообщении что выполнена, мы отсчитываем время от предыдущего лога записи (когда задача была запущена) и добавляем результат в поле time
+        $time = '';
+        $task = Task::where('id', $id)->first();
+        $task->status_work = Input::get('status_work');
+        if(Input::get('status_work') != 'in_work') {
+            // get this task from table db for writing time
+            $query = DB::select('select created_at, status_work from task_work_log where id_task = ?', [$id]);
+            if(empty($query)) {
+                $time = '';
+            }
+            else {
+                $i = count($query) - 1;
+                if($query[$i]->status_work == 'in_work') {
+                    $celebrations = array(
+                        '0'=>'01-01',
+                        '1'=>'01-02',
+                        '2'=>'01-03',
+                        '3'=>'01-04',
+                        '4'=>'01-05',
+                        '5'=>'01-06',
+                        '6'=>'01-07',
+                        '7'=>'01-08',
 
-            $i = count($query) - 1;
-            $datetime1 = new DateTime($query[$i]->created_at);
-            $datetime2 = new DateTime(date('Y-m-d H:i:s'));
-            $time = $datetime1->diff($datetime2);
-            print '<pre>';
-            //print_r(date('Y-m-d H:i:s'));
-            print_r($time->s); exit;
+                    );
+                    date_default_timezone_set('Europe/Moscow');
+                    $date_from_explode = explode(' ', $query[$i]->created_at);
+                    $date_from = $date_from_explode[0];
+                    $date_to = date('Y-m-d');
+                    $date_from_parts = explode('-', $date_from);
+                    $date_to_parts = explode('-', $date_to);
+
+                    // Calculating the UNIX Timestamp for both dates
+                    $ts_from = mktime(0, 0, 0, $date_from_parts[1], $date_from_parts[2], $date_from_parts[0]);
+                    $ts_to = mktime(0, 0, 0, $date_to_parts[1], $date_to_parts[2], $date_to_parts[0]);
+
+                    // 86400 = seconds per day
+                    for ($x = $ts_from; $x <= $ts_to; $x += 86400)
+                    {
+
+                        if(date('N', strtotime(date('Y-m-d', $x))) < 6) {
+                            if((empty(array_search(substr(date('Y-m-d', $x), -5, 5), $celebrations)) && array_search(substr(date('Y-m-d', $x), -5, 5), $celebrations) == '')) {
+                                $vacation_days[] = date('Y-m-d', $x);
+                            }
+                        }
+                    }
+                    if(date('H') >= 18) {
+                        // если задача начата не в 9 утра, брать и отнимать лишние часы (задача начата в 15:00, а считается целый день)
+                        if(substr($query[$i]->created_at, 14, 2) != '09') {
+                            $hour = 18 - 10 - substr($query[$i]->created_at, 11, 2);
+                        }
+                        else {
+                            $hour = 8;
+                        }
+                        $minutes = round((60 - substr($query[$i]->created_at, 14, 2)) / 60);
+                    }
+                    else {
+                        if(substr($query[$i]->created_at, 14, 2) != '09') {
+                            $hour = date('H') - 10 - substr($query[$i]->created_at, 11, 2);
+                        }
+                        else {
+                            $hour = date('H') - 10;
+                        }
+                        // minutes task
+                        $minutes = round(date('i') + (60 - substr($query[$i]->created_at, 14, 2)) / 60);
+                    }
+                    $task->time = $task->time + count($vacation_days) * 8 + $hour + $minutes;
+                }
+            }
         }
 
+        $task->save();
         DB::insert('insert into task_work_log (id_task, status_work, comment, time) values (?, ?, ?, ?)', [$id, Input::get('status_work'), Input::get('comment'), $time]);
-        //id_task
-        //status_work
-        //comment
-        //created_at
-        //time
         return redirect('/admin');
     }
 

@@ -17,11 +17,17 @@ class UsersController extends Controller
      */
     public function index()
     {
-        $users = json_encode(User::orderBy('created_at')->paginate(0));
+        $users = json_encode(User::orderBy('created_at')->get());
         // page Heading
         $title = 'Users';
         // return to our view (home.blade.php)
         return view('users')->withUsers($users)->withTitle($title);
+    }
+
+    public function api_users()
+    {
+        $users = json_encode(User::orderBy('created_at')->get());
+        return $users;
     }
 
     /**

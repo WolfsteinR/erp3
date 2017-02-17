@@ -13,6 +13,10 @@
                     <input type="text" class="form-control" name="first_name" id="exampleInputName" placeholder="{{$user->first_name}}">
                 </div>
                 <div class="form-group">
+                    <label for="exampleInputName">Family</label>
+                    <input type="text" class="form-control" name="last_name" id="exampleInputName" placeholder="{{$user->last_name}}">
+                </div>
+                <div class="form-group">
                     <label for="exampleInputEmail1">Email</label>
                     <input type="email" class="form-control" id="exampleInputEmail1" placeholder="{{$user->email}}">
                 </div>

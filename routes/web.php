@@ -21,6 +21,8 @@ Route::get('/admin/settings', function(){
     return view('settings');
 });
 
+Route::get('/api/users', 'UsersController@api_users');
+
 //Route::get('/admin', 'UsersController@index');
 Route::get('/register', 'Auth\RegisterController@showRegistrationForm');
 Route::get('register-success', function(){

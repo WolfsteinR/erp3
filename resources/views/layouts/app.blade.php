@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ru" ng-app>
+<html lang="ru" ng-app="app">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -17,6 +17,7 @@
     <link href="/public/css/style.css" rel="stylesheet">
 
     <script src="/public/js/angular.min.js"></script>
+    <script src="/public/js/angular_app.js"></script>
     <!-- Scripts -->
     <script>
         window.Laravel = <?php echo json_encode([
@@ -64,7 +65,7 @@
                         @if (Auth::user())
                             <a href="{{ url('/logout') }}"
                                onclick="event.preventDefault();document.getElementById('logout-form').submit();" class="navbar-link btn">
-                                <i class="fa fa-close" aria-hidden="true"></i> Выйти ({{Auth::user()->name}})
+                                <i class="fa fa-close" aria-hidden="true"></i> Выйти ({{Auth::user()->first_name}})
                             </a>
                             <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
                                 {{ csrf_field() }}

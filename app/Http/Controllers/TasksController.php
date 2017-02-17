@@ -155,7 +155,7 @@ class TasksController extends Controller
             $task->upload_id = $entry->id;
         }
         $task->save();
-        return redirect('/admin');
+        return redirect('/admin')->with('create_task', 'ok');
     }
 
     /**

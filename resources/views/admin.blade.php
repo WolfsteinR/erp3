@@ -100,4 +100,8 @@
 
         @endif
     </div>
+
+    <div id="modal" style="display:none;">
+        <p>Задача создана успешно.</p>
+    </div>
 @endsection
